@@ -11,6 +11,7 @@
 // ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
 
 #include <behaviors.dtsi>
+#include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 
 #define BASE 0
@@ -64,6 +65,22 @@
         };
     };
 
+    behaviors {
+        ttnextprev: ttnextprev {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TTNEXTPREV";
+            #binding-cells = <0>;
+            bindings = <&kp C_NEXT>, <&kp C_PREV>;
+        };
+
+        ttdasheql: ttdasheql {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TTDASHEQL";
+            #binding-cells = <0>;
+            bindings = <&kp MINUS>, <&kp EQUAL>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -88,8 +105,8 @@
             bindings = <
             &kp Q       &kp W        &kp E                  &kp R       &kp T        &kp Y        &kp U        &kp I        &kp O        &kp P
             &mt LALT A  &mt LCTRL S  &mt LSHFT D            &mt LGUI F  &kp G        &kp H        &mt RGUI J   &mt RSHFT K  &mt RCTRL L  &mt RALT SEMI
-&caps_word  &kp Z       &kp X        &kp C                  &kp V       &kp B        &kp N        &kp M        &kp COMMA    &kp DOT      &kp FSLH       &kp EQUAL
-                                     &kp LG(LC(LA(LSHFT)))  &gresc      &lt 1 TAB    &lt 2 SPACE  &lt 1 ENTER  &kp MINUS
+&caps_word  &kp Z       &kp X        &kp C                  &kp V       &kp B        &kp N        &kp M        &kp COMMA    &kp DOT      &kp FSLH       &kp SINGLE_QUOTE
+                                     &kp LG(LC(LA(LSHFT)))  &gresc      &lt 1 TAB    &lt 2 SPACE  &lt 1 ENTER  &ttdasheql
             >;
         };
 
@@ -112,10 +129,10 @@
             //                                     ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛   ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
 
             bindings = <
-           &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4    &kp NUMBER_5            &kp NUMBER_6      &kp N7             &kp N8      &kp NUMBER_9  &kp N0
-           &mt LALT F9   &mt LCTRL F2  &mt LSHFT F5  &mt LGUI F10    &kp F12                 &kp LEFT          &kp DOWN           &kp UP      &kp RIGHT     &kp SINGLE_QUOTE
-&kp GRAVE  &kp C_VOL_DN  &kp C_VOL_UP  &kp LS(F5)    &kp LS(LG(N5))  &kp LS(LG(NUMBER_4))    &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp LPAR    &kp RPAR      &kp BACKSLASH     &kp C_PP
-                                       &trans        &trans          &trans                  &kp BACKSPACE     &kp C_PREV         &kp C_NEXT
+           &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp NUMBER_4    &kp NUMBER_5            &kp NUMBER_6      &kp N7             &kp N8       &kp NUMBER_9  &kp N0
+           &mt LALT F9   &mt LCTRL F2  &mt LSHFT F5  &mt LGUI F10    &kp F12                 &kp LEFT          &kp DOWN           &kp UP       &kp RIGHT     &kp EQUAL
+&kp GRAVE  &kp C_VOL_DN  &kp C_VOL_UP  &kp LS(F5)    &kp LS(LG(N5))  &kp LS(LG(NUMBER_4))    &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp LPAR     &kp RPAR      &kp BACKSLASH  &kp C_PP
+                                       &trans        &trans          &trans                  &kp BACKSPACE     &kp C_PREV         &ttnextprev
             >;
         };
 
@@ -138,10 +155,10 @@
             //                                     ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛   ┗━━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━┛
 
             bindings = <
-                 &kp KP_DIVIDE  &kp KP_NUMBER_7  &kp KP_NUMBER_8          &kp KP_NUMBER_9  &kp BACKSPACE               &none  &none  &none  &none  &none
-                 &kp KP_PLUS    &kp KP_NUMBER_4  &kp KP_NUMBER_5          &kp KP_NUMBER_6  &kp KP_COMMA                &none  &none  &none  &none  &none
-&kp KP_MULTIPLY  &kp KP_MINUS   &kp KP_NUMBER_1  &kp KP_NUMBER_2          &kp KP_NUMBER_3  &kp KP_DOT                  &none  &none  &none  &none  &none  &none
-                                                 &kp KP_LEFT_PARENTHESIS  &kp KP_ENTER     &kp KP_RIGHT_PARENTHESIS    &none  &none  &none
+                 &kp KP_DIVIDE  &kp KP_NUMBER_7  &kp KP_NUMBER_8          &kp KP_NUMBER_9  &kp BACKSPACE               &bt BT_CLR_ALL  &none         &none         &none         &none
+                 &kp KP_PLUS    &kp KP_NUMBER_4  &kp KP_NUMBER_5          &kp KP_NUMBER_6  &kp KP_COMMA                &bt BT_CLR      &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3
+&kp KP_MULTIPLY  &kp KP_MINUS   &kp KP_NUMBER_1  &kp KP_NUMBER_2          &kp KP_NUMBER_3  &kp KP_DOT                  &none           &none         &none         &none         &none         &none
+                                                 &kp KP_LEFT_PARENTHESIS  &kp KP_ENTER     &kp KP_RIGHT_PARENTHESIS    &none           &none         &none
             >;
         };
 
